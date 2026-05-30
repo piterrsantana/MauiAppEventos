@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppEventos.Views.EventoCadastrado"
+             Title="Orçamento Emitido"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource White}">
+
+    <VerticalStackLayout VerticalOptions="CenterAndExpand"
+                         Padding="20"
+                         Spacing="12">
+
+        <Label Text="{Binding NomeCliente, StringFormat='Contratante:  {0}'}"
+               TextColor="{StaticResource CorPrincipal}"
+               FontSize="26"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               LineBreakMode="WordWrap" />
+        <Label Text="{Binding TipoEvento, StringFormat='Categoria: {0}'}"
+               TextColor="Gray"
+               FontSize="16"
+               HorizontalTextAlignment="Center"
+               FontAttributes="Italic" />
+
+        <Frame BackgroundColor="Black"
+               Padding="12"
+               CornerRadius="8">
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                   Spacing="5">
+                <Label Text="Espaço Reservado:"
+                       TextColor="Gray"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding LocalSalao}"
+                       TextColor="White" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Frame BackgroundColor="Black"
+               Padding="12"
+               CornerRadius="8">
+            <Grid ColumnDefinitions="*, *, *"
+                  RowDefinitions="Auto, Auto, Auto"
+                  Padding="5"
+                  RowSpacing="5">
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Público"
+                       TextColor="Gray"
+                       FontAttributes="Bold" />
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Quantidade"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Gray"
+                       FontAttributes="Bold" />
+                <Label Grid.Row="0"
+                       Grid.Column="2"
+                       Text="Valor Unit."
+                       HorizontalTextAlignment="Center"
+                       TextColor="Gray"
+                       FontAttributes="Bold" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Adultos"
+                       TextColor="White" />
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding QntAdultos}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+                <Label Grid.Row="1"
+                       Grid.Column="2"
+                       Text="{Binding CustoAdulto, StringFormat='{}{0:C}'}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="LightBlue" />
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Crianças"
+                       TextColor="White" />
+                <Label Grid.Row="2"
+                       Grid.Column="1"
+                       Text="{Binding QntCriancas}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+                <Label Grid.Row="2"
+                       Grid.Column="2"
+                       Text="{Binding CustoCrianca, StringFormat='{}{0:C}'}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="LightBlue" />
+            </Grid>
+        </Frame>
+
+        <Frame BackgroundColor="Black"
+               Padding="12"
+               CornerRadius="8">
+            <Grid ColumnDefinitions="*, *, *"
+                  RowDefinitions="Auto, Auto"
+                  Padding="5">
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Data Início:"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Gray" />
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Data Término:"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Gray" />
+                <Label Grid.Row="0"
+                       Grid.Column="2"
+                       Text="Reserva Salão:"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Gray" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="{Binding DataInicio, StringFormat='{}{0:dd/MM/yyyy}'}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding DataTermino, StringFormat='{}{0:dd/MM/yyyy}'}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+                <Label Grid.Row="1"
+                       Grid.Column="2"
+                       Text="{Binding DuracaoDias, StringFormat='{}{0} dias'}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       FontAttributes="Bold" />
+            </Grid>
+        </Frame>
+
+        <Frame BackgroundColor="Black"
+               Padding="15"
+               CornerRadius="8">
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                   Spacing="8">
+                <Label Text="ORÇAMENTO TOTAL:"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center" />
+                <Label Text="{Binding CustoTotal, StringFormat='{}{0:C}'}"
+                       TextColor="LightGreen"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Button Text="Voltar"
+                Style="{StaticResource BotaoPadrao}"
+                WidthRequest="220"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked"
+                Margin="0,10,0,0" />
+
+    </VerticalStackLayout>
+</ContentPage>

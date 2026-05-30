@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppEventos.Views.CardapioBuffet"
+             Title="Pacotes Buffet">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20"
+                             Spacing="15">
+
+            <Label Text="PACOTES DISPONÍVEIS"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource CorPrincipal}" />
+
+            <!-- CASAMENTO -->
+            <Frame BackgroundColor="Black"
+                   CornerRadius="10">
+
+                <VerticalStackLayout>
+
+                    <Label Text="💍 Casamento"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Label Text="• Entrada completa
+• Jantar Premium
+• Mesa de frios
+• Sobremesas variadas
+• Bolo decorado
+• Bebidas inclusas
+• Equipe de garçons
+• Equipe de apoio"
+
+                           TextColor="White" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <!-- ANIVERSÁRIO -->
+            <Frame BackgroundColor="Black"
+                   CornerRadius="10">
+
+                <VerticalStackLayout>
+
+                    <Label Text="🎉 Aniversário de Casamento"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Label Text="• Coquetel especial
+• Jantar intermediário
+• Mesa de doces
+• Bolo comemorativo
+• Refrigerantes e sucos
+• Equipe de apoio"
+
+                           TextColor="White" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <!-- FORMATURA -->
+            <Frame BackgroundColor="Black"
+                   CornerRadius="10">
+
+                <VerticalStackLayout>
+
+                    <Label Text="🎓 Formatura"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Label Text="• Coquetel universitário
+• Finger foods
+• Mesa de salgados
+• Refrigerantes
+• Equipe de apoio"
+                           TextColor="White" />
+                </VerticalStackLayout>
+
+            </Frame>
+
+            <Button Text="Voltar"
+                    Style="{StaticResource BotaoPadrao}"
+                    Clicked="Button_Clicked" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
