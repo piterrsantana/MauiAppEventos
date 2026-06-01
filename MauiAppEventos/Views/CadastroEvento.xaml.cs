@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Maui.Controls;
 using MauiAppEventos.Models;
 
 namespace MauiAppEventos.Views
@@ -10,48 +8,69 @@ namespace MauiAppEventos.Views
         {
             InitializeComponent();
 
-            // Define limites para impedir reservas retroativas.
+            // Impede a seleção de datas anteriores à atual.
             dtpck_inicio.MinimumDate = DateTime.Now;
 
-            // Restringe reservas para até três meses à frente.
+            // Permite reservas com até três meses de antecedência.
             dtpck_inicio.MaximumDate = DateTime.Now.AddMonths(3);
 
-            // A data mínima de encerramento deve ser posterior à data atual.
-            dtpck_termino.MinimumDate = DateTime.Now.AddDays(1);
+            // Define a menor data possível para o término da reserva.
+            dtpck_termino.MinimumDate = DateTime.Now;
         }
+
+
+        // Abre a página com os detalhes dos pacotes oferecidos pelo buffet.
         private async void VerPacotes_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CardapioBuffet());
         }
 
-        // Atualiza automaticamente a menor data possível para término da reserva.
+        // Atualiza os limites da data de término conforme a data inicial escolhida.
         private void dtpck_inicio_DateSelected(object sender, DateChangedEventArgs e)
         {
-            DateTime dataInicioSelecionada = (DateTime)dtpck_inicio.Date;
+            // Verifica se uma data válida foi selecionada.
+            if (e.NewDate == null) return;
 
-            dtpck_termino.MinimumDate = dataInicioSelecionada.AddDays(1);
+            DateTime dataInicioSelecionada = e.NewDate.Value;
+
+            // Mantém a data de término alinhada com a nova data inicial.
+            dtpck_termino.Date = dataInicioSelecionada;
+
+            // Permite reservas no mesmo dia ou em até dois dias após o início.
+            dtpck_termino.MinimumDate = dataInicioSelecionada;
+            dtpck_termino.MaximumDate = dataInicioSelecionada.AddDays(2);
         }
 
-        // Responsável pela validação dos dados, criação do objeto Evento e navegação para a página de orçamento.
+        // Valida os dados e gera o orçamento do evento.
         [Obsolete]
         private async void Button_Clicked(object sender, EventArgs e)
         {
             try
             {
-                // Verificação básica dos campos obrigatórios.
+                // Confirma que as datas foram informadas.
                 if (string.IsNullOrWhiteSpace(txt_nome.Text) ||
                     pck_tipo.SelectedItem == null ||
                     pck_local.SelectedItem == null)
                 {
-                    await DisplayAlert(
-                        "Campos Incompletos",
-                        "Por favor, preencha o nome do cliente e selecione o tipo de evento e o salão.",
-                        "Ok");
-
+                    await DisplayAlert("Campos Incompletos", "Por favor, preencha o nome do cliente e selecione o tipo de evento e o salão.", "Ok");
                     return;
                 }
 
-                // Instanciação e preenchimento da entidade de negócio.
+                if (dtpck_inicio.Date == null || dtpck_termino.Date == null)
+                {
+                    await DisplayAlert("Datas Ausentes", "Por favor, selecione as datas de início e término do evento.", "Ok");
+                    return;
+                }
+
+                // Verifica se o período escolhido atende às regras da reserva.
+                if (dtpck_termino.Date.Value < dtpck_inicio.Date.Value ||
+                    dtpck_termino.Date.Value > dtpck_inicio.Date.Value.AddDays(2))
+                {
+                    await DisplayAlert("Período Inválido", "O término do evento deve ser no mesmo dia ou em até 2 dias após o início (limite de fim de semana).", "Ok");
+                    return;
+                }
+
+                // Cria o objeto com os dados informados pelo usuário.
                 Evento novoEvento = new Evento
                 {
                     NomeCliente = txt_nome.Text,
@@ -59,11 +78,11 @@ namespace MauiAppEventos.Views
                     LocalSalao = pck_local.SelectedItem.ToString(),
                     QntAdultos = Convert.ToInt32(stp_adultos.Value),
                     QntCriancas = Convert.ToInt32(stp_criancas.Value),
-                    DataInicio = (DateTime)dtpck_inicio.Date,
-                    DataTermino = (DateTime)dtpck_termino.Date
+                    DataInicio = dtpck_inicio.Date.Value,
+                    DataTermino = dtpck_termino.Date.Value
                 };
 
-                // Navega para a página de resumo enviando o objeto preenchido por parâmetro.
+                // Abre a tela de resumo do orçamento.
                 await Navigation.PushAsync(new EventoCadastrado(novoEvento));
             }
             catch (Exception ex)
